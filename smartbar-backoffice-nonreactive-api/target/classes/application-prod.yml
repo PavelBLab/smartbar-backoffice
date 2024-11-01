@@ -1,0 +1,10 @@
+quarkus:
+  datasource:
+    username: postgres
+    password: postgres
+    jdbc: # blocking
+      url: jdbc:postgresql://postgres-smartbar-quarkus-prod:5432/smartbar-backoffice
+
+  hibernate-orm:
+    database:
+      generation: update

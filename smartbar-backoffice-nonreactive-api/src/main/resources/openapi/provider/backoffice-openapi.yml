@@ -1,0 +1,332 @@
+openapi: 3.0.0
+info:
+  title: Smartbar Backoffice
+  version: 1.0.0
+  description: API for managing categories, articles, and tables in the Smartbar backoffice.
+
+tags:
+  - name: categories
+    description: Endpoints related to managing categories
+  - name: articles
+    description: Endpoints related to managing articles
+  - name: tables
+    description: Endpoints related to managing tables
+
+paths:
+
+  /categories:
+    get:
+      operationId: allCategories
+      summary: Retrieve a list of categories
+      tags:
+        - categories
+      responses:
+        200:
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/categoryDto"
+    
+    post:
+      operationId: createCategory
+      summary: Create a new category
+      tags:
+        - categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/categoryDto"
+      responses:
+        201:
+          description: Category created successfully
+          headers:
+            Location:
+              description: URL of the created category
+              schema:
+                type: string
+
+  /categories/{id}:
+    parameters: 
+      - $ref: '#/components/parameters/id'
+    
+    get:
+      operationId: oneCategory
+      summary: Retrieve a category by ID
+      tags:
+        - categories
+      responses:
+        200:
+          description: Category details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/categoryDto"
+    
+    put:
+      operationId: updateCategory
+      summary: Update an existing category
+      tags:
+        - categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/categoryDto"
+      responses:
+        200:
+          description: Category updated successfully
+    
+    delete:
+      operationId: deleteCategory
+      summary: Delete a category
+      tags:
+        - categories
+      responses:
+        200:
+          description: Category deleted successfully
+
+
+  /articles:
+    get:
+      operationId: allArticles
+      summary: Retrieve a list of articles
+      tags:
+        - articles
+      responses:
+        200:
+          description: List of articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/articleDto"
+    
+    post:
+      operationId: createArticle
+      summary: Create a new article
+      tags:
+        - articles
+      parameters:
+        - name: x-category-id
+          in: header
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/articleDto"
+      responses:
+        201:
+          description: Article created successfully
+          headers:
+            Location:
+              description: URL of the created article
+              schema:
+                type: string
+
+  
+  /articles/{id}:
+    parameters: 
+      - $ref: '#/components/parameters/id'
+    
+    get:
+      operationId: oneArticle
+      summary: Retrieve an article by ID
+      tags:
+        - articles
+      responses:
+        200:
+          description: Article details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/articleDto"
+    
+    put:
+      operationId: updateArticle
+      summary: Update an existing article
+      tags:
+        - articles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/articleDto"
+      responses:
+        200:
+          description: Article updated successfully
+    
+    delete:
+      operationId: deleteArticle
+      summary: Delete an article
+      tags:
+        - articles
+      responses:
+        200:
+          description: Article deleted successfully
+
+  
+  /tables:
+    get:
+      operationId: allTables
+      summary: Retrieve a list of tables
+      tags:
+        - tables
+      responses:
+        200:
+          description: List of tables
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/tableDto"
+    
+    post:
+      operationId: createTable
+      summary: Create a new table
+      tags:
+        - tables
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/tableDto"
+      responses:
+        201:
+          description: Table created successfully
+          headers:
+            Location:
+              description: URL of the created table
+              schema:
+                type: string
+
+  /tables/{id}:
+    parameters: 
+      - $ref: '#/components/parameters/id'
+    
+    get:
+      operationId: oneTable
+      summary: Retrieve a table by ID
+      tags:
+        - tables
+      responses:
+        200:
+          description: Table details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tableDto"
+    
+    put:
+      operationId: updateTable
+      summary: Update an existing table
+      tags:
+        - tables
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/tableDto"
+      responses:
+        200:
+          description: Table updated successfully
+    
+    delete:
+      operationId: deleteTable
+      summary: Delete a table
+      tags:
+        - tables
+      responses:
+        200:
+          description: Table deleted successfully
+
+
+components:
+
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      description: Unique ID
+      schema:
+        type: integer
+        format: int64
+
+
+  schemas:
+    categoryDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          description: The name of the category
+        description:
+          type: string
+          description: A description of the category
+
+    articleDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          description: The name of the article
+        price:
+          type: number
+          description: The price of the article
+        description:
+          type: string
+          description: A description of the article
+        picture:
+          type: string
+          description: URL to the picture of the article
+
+    tableDto:
+      type: object
+      required:
+        - name
+        - seatCount
+        - active
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          description: Table name
+        seatCount:
+          type: integer
+          description: Number of seats at the table
+        active:
+          type: boolean
+          description: Table status
+
+  responses:
+    201:
+      description: Created successfully
+      headers:
+        Location:
+          description: URL of the created resource
+          schema:
+            type: string

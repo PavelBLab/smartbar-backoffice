@@ -1,0 +1,11 @@
+README.md
+pom.xml
+src/main/java/com/quarkus/smartbackoffice/provider/RestApplication.java
+src/main/java/com/quarkus/smartbackoffice/provider/RestResourceRoot.java
+src/main/java/com/quarkus/smartbackoffice/provider/controllers/ArticlesApi.java
+src/main/java/com/quarkus/smartbackoffice/provider/controllers/CategoriesApi.java
+src/main/java/com/quarkus/smartbackoffice/provider/controllers/TablesApi.java
+src/main/java/com/quarkus/smartbackoffice/provider/models/ArticleDto.java
+src/main/java/com/quarkus/smartbackoffice/provider/models/CategoryDto.java
+src/main/java/com/quarkus/smartbackoffice/provider/models/TableDto.java
+src/main/openapi/openapi.yaml

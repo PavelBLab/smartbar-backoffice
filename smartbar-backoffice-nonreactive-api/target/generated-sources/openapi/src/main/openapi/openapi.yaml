@@ -1,0 +1,481 @@
+openapi: 3.0.0
+info:
+  description: "API for managing categories, articles, and tables in the Smartbar\
+    \ backoffice."
+  title: Smartbar Backoffice
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- description: Endpoints related to managing categories
+  name: categories
+- description: Endpoints related to managing articles
+  name: articles
+- description: Endpoints related to managing tables
+  name: tables
+paths:
+  /categories:
+    get:
+      operationId: allCategories
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/categoryDto'
+                type: array
+          description: List of categories
+      summary: Retrieve a list of categories
+      tags:
+      - categories
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: categories
+    post:
+      operationId: createCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/categoryDto'
+        required: true
+      responses:
+        "201":
+          description: Category created successfully
+          headers:
+            Location:
+              description: URL of the created category
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Create a new category
+      tags:
+      - categories
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: categories
+  /categories/{id}:
+    delete:
+      operationId: deleteCategory
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Category deleted successfully
+      summary: Delete a category
+      tags:
+      - categories
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: categories
+    get:
+      operationId: oneCategory
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/categoryDto'
+          description: Category details
+      summary: Retrieve a category by ID
+      tags:
+      - categories
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: categories
+    put:
+      operationId: updateCategory
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/categoryDto'
+        required: true
+      responses:
+        "200":
+          description: Category updated successfully
+      summary: Update an existing category
+      tags:
+      - categories
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: categories
+  /articles:
+    get:
+      operationId: allArticles
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/articleDto'
+                type: array
+          description: List of articles
+      summary: Retrieve a list of articles
+      tags:
+      - articles
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: articles
+    post:
+      operationId: createArticle
+      parameters:
+      - explode: false
+        in: header
+        name: x-category-id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/articleDto'
+        required: true
+      responses:
+        "201":
+          description: Article created successfully
+          headers:
+            Location:
+              description: URL of the created article
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Create a new article
+      tags:
+      - articles
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: articles
+  /articles/{id}:
+    delete:
+      operationId: deleteArticle
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Article deleted successfully
+      summary: Delete an article
+      tags:
+      - articles
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: articles
+    get:
+      operationId: oneArticle
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/articleDto'
+          description: Article details
+      summary: Retrieve an article by ID
+      tags:
+      - articles
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: articles
+    put:
+      operationId: updateArticle
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/articleDto'
+        required: true
+      responses:
+        "200":
+          description: Article updated successfully
+      summary: Update an existing article
+      tags:
+      - articles
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: articles
+  /tables:
+    get:
+      operationId: allTables
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/tableDto'
+                type: array
+          description: List of tables
+      summary: Retrieve a list of tables
+      tags:
+      - tables
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: tables
+    post:
+      operationId: createTable
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tableDto'
+        required: true
+      responses:
+        "201":
+          description: Table created successfully
+          headers:
+            Location:
+              description: URL of the created table
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Create a new table
+      tags:
+      - tables
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: tables
+  /tables/{id}:
+    delete:
+      operationId: deleteTable
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: Table deleted successfully
+      summary: Delete a table
+      tags:
+      - tables
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: tables
+    get:
+      operationId: oneTable
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tableDto'
+          description: Table details
+      summary: Retrieve a table by ID
+      tags:
+      - tables
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: tables
+    put:
+      operationId: updateTable
+      parameters:
+      - description: Unique ID
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tableDto'
+        required: true
+      responses:
+        "200":
+          description: Table updated successfully
+      summary: Update an existing table
+      tags:
+      - tables
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: tables
+components:
+  parameters:
+    id:
+      description: Unique ID
+      explode: false
+      in: path
+      name: id
+      required: true
+      schema:
+        format: int64
+        type: integer
+      style: simple
+  responses:
+    "201":
+      description: Created successfully
+      headers:
+        Location:
+          description: URL of the created resource
+          explode: false
+          schema:
+            type: string
+          style: simple
+  schemas:
+    categoryDto:
+      example:
+        name: name
+        description: description
+        id: 0
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          description: The name of the category
+          type: string
+        description:
+          description: A description of the category
+          type: string
+      type: object
+    articleDto:
+      example:
+        price: 6.027456183070403
+        name: name
+        description: description
+        id: 0
+        picture: picture
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          description: The name of the article
+          type: string
+        price:
+          description: The price of the article
+          type: number
+        description:
+          description: A description of the article
+          type: string
+        picture:
+          description: URL to the picture of the article
+          type: string
+      type: object
+    tableDto:
+      example:
+        name: name
+        active: true
+        id: 0
+        seatCount: 6
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          description: Table name
+          type: string
+        seatCount:
+          description: Number of seats at the table
+          type: integer
+        active:
+          description: Table status
+          type: boolean
+      required:
+      - active
+      - name
+      - seatCount
+      type: object
